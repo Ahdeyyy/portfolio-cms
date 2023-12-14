@@ -29,8 +29,8 @@ app.use('*', logger())
 app.use(
     '*',
     basicAuth({
-        username: env['USERNAME'] || 'admin',
-        password: env['PASSWORD'] || 'admin',
+        username: Deno.env.get('USERNAME') || env['USERNAME'],
+        password: Deno.env.get('PASSWORD') || env['PASSWORD'],
     })
 )
 
