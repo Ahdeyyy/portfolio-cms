@@ -27,7 +27,7 @@ app.use('*', logger())
 
 //@ts-ignore the types are wrong
 app.use(
-    '*',
+    '/auth/*',
     basicAuth({
         username: Deno.env.get('USERNAME') || env['USERNAME'],
         password: Deno.env.get('PASSWORD') || env['PASSWORD'],
@@ -47,7 +47,7 @@ app.get('/projects', async (c) => {
 
     return c.json(projects)
 })
-app.post('/projects', async (c) => {
+app.post('/auth/projects', async (c) => {
     const body = await c.req.json()
     const project = body as Project
 
@@ -79,7 +79,7 @@ app.get('/projects/:name', async (c) => {
 )
 
 
-app.delete('/projects/:name', async (c) => {
+app.delete('/auth/projects/:name', async (c) => {
     const name = c.req.param('name')
     const key = ['projects', name]
     const project = await kv.get(key)
@@ -91,7 +91,7 @@ app.delete('/projects/:name', async (c) => {
 }
 )
 
-app.patch('/projects/:name', async (c) => {
+app.patch('/auth/projects/:name', async (c) => {
     const name = c.req.param('name')
     const key = ['projects', name]
     const project = await kv.get(key)
